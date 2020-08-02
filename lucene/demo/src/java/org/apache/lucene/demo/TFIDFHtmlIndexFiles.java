@@ -53,15 +53,19 @@ import org.apache.lucene.benchmark.byTask.feeds.DemoHTMLParser;
 import java.lang.Object;
 import java.util.Arrays;
 
+import org.apache.lucene.demo.CMPT456Analyzer;
+import org.apache.lucene.demo.CMPT456Similarity;
+
+
 
 /** Index all text files under a directory.
  * <p>
  * This is a command-line application demonstrating simple Lucene indexing.
  * Run it with no command-line arguments for usage information.
  */
-public class IndexFiles {
+public class TFIDFHtmlIndexFiles {
   
-  private IndexFiles() {}
+  private TFIDFHtmlIndexFiles() {}
 
   /** Index all text files under a directory. */
   public static void main(String[] args) {
@@ -104,8 +108,28 @@ public class IndexFiles {
       System.out.println("Indexing to directory '" + indexPath + "'...");
 
       Directory dir = FSDirectory.open(Paths.get(indexPath));
-      Analyzer analyzer = new StandardAnalyzer();
+// ##########################################Q2      Tokenization (30 pts)
+// // In the second part of the assignment, you will experience how plain text passed to Lucene for
+// indexing goes through a process generally called tokenization. Tokenization is the process of
+// breaking input text into small indexing elements – tokens. The way input text is broken into
+// tokens heavily influences how people will then be able to search for that text.
+// As you have seen in the IndexFiles.java, we have used class StandardAnalyzer in order to control
+// the tokenization process. Look at its source code, you can see this class extends the
+// createComponents method to build a standard tokenization process to convert tokens to
+// lowercase then filer out based on a predefined list of stop-words.
+// In this section, we want you to create a class called CMPT456Analyzer.java to control the
+// tokenization process as follows:
+
+      Analyzer analyzer = new CMPT456Analyzer();
+// ##########################################Q2      Tokenization (30 pts)
       IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
+//#######################################Q3
+//The next thing we want you to do is to alter the way Lucene scoring. You will need to create
+// TFIDFHtmlIndexFiles.java and TFIDFSearchFiles.java in which you want to use
+// CMPT456Similarity for your indexing & querying process. 
+      CMPT456Similarity similarity = new CMPT456Similarity();
+      iwc.setSimilarity(similarity);
+//#######################################Q3
 
       if (create) {
         // Create a new index in the directory, removing any

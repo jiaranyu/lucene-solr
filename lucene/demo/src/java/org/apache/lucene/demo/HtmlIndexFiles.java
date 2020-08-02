@@ -53,15 +53,17 @@ import org.apache.lucene.benchmark.byTask.feeds.DemoHTMLParser;
 import java.lang.Object;
 import java.util.Arrays;
 
+import org.apache.lucene.demo.CMPT456Analyzer;
+
 
 /** Index all text files under a directory.
  * <p>
  * This is a command-line application demonstrating simple Lucene indexing.
  * Run it with no command-line arguments for usage information.
  */
-public class IndexFiles {
+public class HtmlIndexFiles {
   
-  private IndexFiles() {}
+  private HtmlIndexFiles() {}
 
   /** Index all text files under a directory. */
   public static void main(String[] args) {
@@ -104,7 +106,7 @@ public class IndexFiles {
       System.out.println("Indexing to directory '" + indexPath + "'...");
 
       Directory dir = FSDirectory.open(Paths.get(indexPath));
-      Analyzer analyzer = new StandardAnalyzer();
+      Analyzer analyzer = new CMPT456Analyzer();
       IndexWriterConfig iwc = new IndexWriterConfig(analyzer);
 
       if (create) {
@@ -226,6 +228,8 @@ public class IndexFiles {
         }catch(SAXException e){
             System.out.println("Constructer of parser failed:" + e.getMessage());
         }
+        //########
+
 
       //doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
       
